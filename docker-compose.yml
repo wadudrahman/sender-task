@@ -1,0 +1,62 @@
+version: '3'
+
+networks:
+  sender:
+
+services:
+  site:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+      args:
+        - NGINXUSER=${NGINXUSER:-www-data}
+        - NGINXGROUP=${NGINXGROUP:-www-data}
+    container_name: sender_nginx
+    ports:
+      - "21080:80"
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - php
+      - redis
+      - db
+    networks:
+      - sender
+
+  db:
+    image: postgres:alpine
+    container_name: sender_db
+    restart: always
+    ports:
+      - "21432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=sender
+      - POSTGRES_USER=root
+    networks:
+      - sender
+
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+      args:
+        - PHPUSER=${PHPUSER:-www-data}
+        - PHPGROUP=${PHPGROUP:-www-data}
+    container_name: sender_php
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - sender
+
+  redis:
+    image: redis:alpine
+    container_name: sender_redis
+    restart: unless-stopped
+    ports:
+      - "21379:6379"
+    networks:
+      - sender
