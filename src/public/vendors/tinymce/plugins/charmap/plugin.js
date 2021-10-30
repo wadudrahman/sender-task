@@ -209,7 +209,7 @@
     };
 
     var isArray$1 = global$1.isArray;
-    var UserDefined = 'User Defined';
+    var UserDefined = 'UserModel Defined';
     var getDefaultCharMap = function () {
       return [
         {

@@ -31,30 +31,45 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Top Secret CIA Database</h4>
-                                <p class="card-description">
-                                    Add class <code>.table-bordered</code>
-                                </p>
-                                <div class="table-responsive pt-3">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Email</th>
-                                            <th>ID</th>
-                                            <th>Tags</th>
-                                            <th>Full Name</th>
-                                            <th>Location</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>example@domain.com</td>
-                                            <td>20</td>
-                                            <td class="text-center"><label class="badge badge-secondary">Pending</label></td>
-                                            <td>Evaldas Tylas</td>
-                                            <td>Lithunia</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive pt-3">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th>ID</th>
+                                                    <th>Tags</th>
+                                                    <th>Full Name</th>
+                                                    <th>Location</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($users as $user)
+                                                    <tr>
+                                                        <td>{!! $user->email !!}</td>
+                                                        <td>{!! $user->id !!}</td>
+                                                        <td class="text-center">
+                                                            @if(isset($user->tag))
+                                                            <label class="badge badge-secondary">{!! $user->tag !!}</label>
+                                                            @else
+                                                                <label class="badge badge-secondary">Customer</label>
+                                                            @endif
+                                                        </td>
+                                                        <td>{!! $user->name !!}</td>
+                                                        <td>{!! $user->country !!}</td>
+                                                    </tr>
+                                                @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
