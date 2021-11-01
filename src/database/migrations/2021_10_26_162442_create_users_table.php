@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('ip');
             $table->string('country');
             $table->timestamps();
-            Schema::dropIfExists('personal_access_tokens');
         });
     }
 
